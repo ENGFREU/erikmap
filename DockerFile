@@ -1,0 +1,19 @@
+# Лёгкий образ для хостинга erikmap где угодно (VPS, Fly.io, Railway, Render и т.п.)
+FROM python:3.12-slim
+
+# iputils-ping нужен для фазы предварительного пинга
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY . /app
+
+# Ставим вместе с поддержкой прокси
+RUN pip install --no-cache-dir '.[proxy]'
+
+# Конфиг (в т.ч. прокси) можно прокинуть переменной ERIKMAP_CONFIG или volume
+ENV ERIKMAP_CONFIG=/config/config.json
+
+ENTRYPOINT ["erikmap"]
+CMD ["--help"]
