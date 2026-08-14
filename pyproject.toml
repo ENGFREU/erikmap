@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "erikmap"
+version = "1.0.0"
+description = "Минималистичный высокоскоростной CLI-сканер первых 2000 портов с поддержкой прокси"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "erikmap" }]
+keywords = ["port-scanner", "network", "security", "cli", "asyncio", "proxy"]
+classifiers = [
+    "Environment :: Console",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Networking",
+]
+
+# Базовый функционал работает без единой сторонней зависимости.
+# Прокси требует python-socks — ставится через extra:  pip install 'erikmap[proxy]'
+dependencies = []
+
+[project.optional-dependencies]
+proxy = ["python-socks[asyncio]>=2.4.0"]
+
+[project.scripts]
+erikmap = "erikmap.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/your-username/erikmap"
+Repository = "https://github.com/your-username/erikmap"
+
+[tool.setuptools]
+packages = ["erikmap"]
